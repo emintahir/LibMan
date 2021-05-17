@@ -1,0 +1,19 @@
+﻿@model LibMan.Models.Book
+
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Book Details</h2>
+<ul>
+    <li>Title: @Model.Title</li>
+    <li>Author: @Model.Author</li>
+    <li>Publisher: @Model.Publisher</li>
+    <li>Year Published: @Model.YearPublished</li>
+    <li>Date Added To The Library: @Model.DateAddedToLibrary.ToLongDateString()</li>
+    <li>Number in Stock: @Model.NumberInStock</li>
+    <li>Category: @Model.Category.CategoryName</li>
+    <li>Number of Pages: @Model.Page</li>
+    @*<li>Photo: @Model.ImageAddress</li>*@
+</ul>
+

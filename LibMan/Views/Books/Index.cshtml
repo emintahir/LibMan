@@ -1,0 +1,60 @@
+﻿@model IEnumerable<LibMan.Models.Book>
+@{
+    ViewBag.Title = "List of Books";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>List of Books</h2>
+<br/>
+@if (!Model.Any())
+{
+    <p>No book is registered in your database.</p>
+}
+else
+{
+    <table id="books" class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Publisher</th>
+            <th>Year Published</th>
+            <th>Date Added To The Library</th>
+            <th>Number of Pages</th>
+            <th>Modify</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.Publisher</td>
+                <td>@book.YearPublished</td>
+                <td>@book.DateAddedToLibrary.ToShortDateString()</td>
+                <td>@book.Page</td>
+                <td>
+                    @Html.ActionLink("Details", "Details", "Books", new { id = book.BookId }, null) / 
+                    @Html.ActionLink("Edit", "Edit", "Books", new { id = book.BookId }, null) / 
+                    @Html.ActionLink("Delete", "Delete", "Books", new { id = book.BookId }, new { onclick = "return confirm('Are you sure you want to delete this book?');" })
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <p>
+        @Html.ActionLink("New Book", "New", "Books", new { @class = "btn btn-primary" })
+    </p>
+    @Html.AntiForgeryToken()
+}
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#books").DataTable();
+        });
+    </script>
+}

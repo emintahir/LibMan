@@ -1,0 +1,53 @@
+﻿@model LibMan.ViewModels.BorrowerFormViewModel
+
+@{
+    ViewBag.Title = @Model.BorrowerFormPageTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.BorrowerFormPageTitle</h2>
+
+
+@using (@Html.BeginForm("Save", "Borrowers"))
+{
+    @Html.ValidationSummary(true, "Please fix the following errors.")
+    <div class="form-group">
+        @Html.LabelFor(b => b.Borrower.Name)
+        @Html.TextBoxFor(b => b.Borrower.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(b => b.Borrower.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(b => b.Borrower.Surname)
+        @Html.TextBoxFor(b => b.Borrower.Surname, new { @class = "form-control" })
+        @Html.ValidationMessageFor(b => b.Borrower.Surname)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(b => b.Borrower.NationalId)
+        @Html.TextBoxFor(b => b.Borrower.NationalId, new { @class = "form-control" })
+        @Html.ValidationMessageFor(b => b.Borrower.NationalId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(b => b.Borrower.BirthDate)
+        @Html.TextBoxFor(b => b.Borrower.BirthDate, "{0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(b => b.Borrower.BirthDate)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(b => b.Borrower.Phone)
+        @Html.TextBoxFor(b => b.Borrower.Phone, new { @class = "form-control" })
+        @Html.ValidationMessageFor(b => b.Borrower.Phone)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(b => b.Borrower.Address)
+        @Html.TextBoxFor(b => b.Borrower.Address, new { @class = "form-control" })
+        @Html.ValidationMessageFor(b => b.Borrower.Address)
+    </div>
+
+    @Html.HiddenFor(b=>b.Borrower.Id)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

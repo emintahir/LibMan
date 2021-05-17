@@ -1,0 +1,72 @@
+﻿@model IEnumerable<LibMan.Models.Borrower>
+@{
+    ViewBag.Title = "SelectBorrower";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Select Borrower</h2>
+
+
+@using (@Html.BeginForm("New","Lends"))
+{
+    @Html.ValidationSummary(true, "Please fix the following errors.")
+
+    <div class="form-group">
+        <br />
+        @if (!Model.Any())
+        {
+            <p>No borrower registered.</p>
+        }
+
+        else
+        {
+            <table id="borrowers" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Name</th>
+                        <th>Last Name</th>
+                        <th>National ID</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var borrower in Model)
+                    {
+
+                        <tr>
+                            @*<td>@Html.CheckBox("Select A Borrower", borrower.IsSelected, new { id = borrower.Id })</td>*@
+                            <td>
+                                <input type="checkbox"
+                                       name="selectedBorrower"
+                                       value="@borrower.Id"
+                                       @(Html.Raw(borrower.IsSelected ? "checked=\"checked\"" : "")) />
+                                </td>
+                            <td>@borrower.Name</td>
+                            <td> @borrower.Surname</td>
+                            <td>@borrower.NationalId</td>
+                            <td>@borrower.Phone</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+    </div>
+    <button type="submit" class="btn btn-primary">Continue >></button>
+    @Html.AntiForgeryToken()
+
+    @*@Html.ActionLink(">> Select Book(s)","New","Lends",new{ id=1020}, new{@class = "btn btn-primary"})*@
+
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $("#borrowers").DataTable();
+        });
+    </script>
+}

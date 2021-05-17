@@ -1,0 +1,70 @@
+﻿@model LibMan.ViewModels.LendFormViewModel
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Lend For</h2>
+
+@using (@Html.BeginForm("Save", "Lends"))
+{
+    <h3 id="selectedBorrower">
+            @Html.HiddenFor(b=>b.Borrower.Id)
+            @Html.TextBoxFor(b => b.Borrower.Name,new {@disabled="true",@placeholder=Model.Borrower.Name})
+        </h3>
+    <br/>
+    <table id="books" class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Select</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Publisher</th>
+            <th>Year Published</th>
+            <th>Number of Pages</th>
+            <th>Number in Stock</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var book in Model.Books)
+        {
+            <tr>
+                <td>@Html.CheckBox("Select Books", book.IsSelected, new { id = book.BookId })</td>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.Publisher</td>
+                <td>@book.YearPublished</td>
+                <td>@book.Page</td>
+                <td>@book.NumberInStock</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    @Html.AntiForgeryToken()
+}
+
+
+    @Html.HiddenFor(b => b.Lend.Id)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $("#books").DataTable();
+        });
+
+        $(document).ready(function () {
+            var div = $("#selectedBorrower");
+                div.animate({ opacity: 0.25 }, "slow");
+                div.animate({ opacity: 1 }, "slow");
+                div.animate({ opacity: 0.25 }, "slow");
+                div.animate({ opacity: 1 }, "slow");
+                div.animate({ opacity: 0.25 }, "slow");
+                div.animate({ opacity: 1 }, "slow");
+            
+        });
+    </script>
+}
